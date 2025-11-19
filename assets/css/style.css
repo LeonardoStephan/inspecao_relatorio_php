@@ -1,0 +1,142 @@
+/* ======== RESET E BASE ======== */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f8e7e0;
+}
+
+h1, h2 {
+    color: #000000;
+}
+
+/* ======== CONTAINER PRINCIPAL ======== */
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ======== BOTÕES ======== */
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: 1px solid #3a3939;
+    border-radius: 4px;
+    background-color: #f36709;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0a17d4;
+    transition: 0.3s ease;
+}
+
+/* ======== INPUTS E SELECTS ======== */
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    margin: 15px 0;
+    width: 300px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    font-size: 16px;
+}
+
+/* ======== TABELAS (relatório gerado) ======== */
+
+table {
+    background-color: rgb(247, 234, 219);
+    border-radius: 4px;
+    border: 1px solid rgb(90, 89, 89);
+    width: 100%;
+}
+
+/* ======== BLOCOS DE PERGUNTAS ======== */
+
+.pergunta {
+    display: none;
+    margin-bottom: 25px;
+}
+
+.pergunta label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ======== VALIDAÇÃO DE ERRO ======== */
+
+.erro { 
+    border: 2px solid #d00 !important;
+    background: #ffecec !important;
+}
+
+#erroOP {
+    color: red;
+    display: none;
+    margin-top: 6px;
+}
+
+.mensagem-erro {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: left;
+    display: none;
+}
+
+/* ======== CAMPOS MIN/MAX E RSSI ======== */
+
+.minmax-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* ======== LISTA DE PRODUTOS (produtos.php) ======== */
+
+.produtos-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.produtos-list form {
+    margin: 0;
+}
+
+.produtos-list button {
+    padding: 15px 25px;
+    font-size: 18px;
+}
+
+
+@media (max-width: 600px) {
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 90%;
+    }
+
+    .minmax-container {
+        flex-direction: column;
+    }
+
+    .produtos-list {
+        flex-direction: column;
+    }
+}

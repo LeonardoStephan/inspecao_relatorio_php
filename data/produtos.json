@@ -1,0 +1,87 @@
+{
+  "placa": {
+    "nome": "Inspeção de Placas",
+    "perguntas": [
+      { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "solda_fria", "tipo": "binaria" },
+      { "chave": "nivel_de_pasta", "tipo": "nivel2" },
+      { "chave": "componentes_inseridos_invertidos_ou_errados", "tipo": "nivel1" },
+      { "chave": "componentes_faltando", "tipo": "nivel1" },
+      { "chave": "componentes_danificados_no_processo", "tipo": "nivel1" },
+      { "chave": "limpeza_feita", "tipo": "binaria" },
+      { "chave": "colado_os_adesivos", "tipo": "binaria" },
+      { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
+      { "chave": "teste_aplicavel", "tipo": "binaria","skip_if_no": true },
+      { "chave": "componentes_em_curto", "tipo": "nivel1" },
+      { "chave": "componentes_com_defeito", "tipo": "nivel1" },
+      { "chave": "danificados_durante_o_teste", "tipo": "nivel1" },
+      { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
+    ]
+  },
+
+  "antena": {
+    "nome": "Antenas Passivas",
+    "perguntas": [
+      { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "materiais_danificados_no_processo", "tipo": "nivel1" },
+      { "chave": "colado_os_adesivos", "tipo": "binaria" },
+      { "chave": "limpeza_feita", "tipo": "binaria" },
+      { "chave": "suporte_montado", "tipo": "binaria" },
+      { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
+      { "chave": "teste_aplicavel", "tipo": "binaria", "skip_if_no": true, "is_test_block": true },
+      { "chave": "componentes_danificados_durante_o_teste", "tipo": "binaria" },
+      { "chave": "teste_do_rssi", "tipo": "rssi" },
+      { "chave": "embalagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
+    ]
+  },
+
+  "modulo_rfid": {
+    "nome": "Leitores RFID e Antenas Integradas",
+    "perguntas": [
+      { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "materiais_danificados_no_processo", "tipo": "nivel1" },
+      { "chave": "colado_os_adesivos", "tipo": "binaria" },
+      { "chave": "limpeza_feita", "tipo": "binaria" },
+      { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
+      { "chave": "teste_aplicavel", "tipo": "binaria", "skip_if_no": true, "is_test_block": true },
+      { "chave": "componentes_danificados_durante_o_teste", "tipo": "binaria" },
+      { "chave": "modulo_ok", "tipo": "binaria" },
+      { "chave": "leitura_de_tags", "tipo": "binaria" },
+      { "chave": "alimentacao_ok", "tipo": "binaria" },
+      { "chave": "embalagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
+    ]
+  },
+
+  "cabos": {
+    "nome": "Cabos",
+    "perguntas": [
+      { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "materiais_danificados_no_processo", "tipo": "nivel1" },
+      { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
+      { "chave": "teste_aplicavel", "tipo": "binaria", "skip_if_no": true, "is_test_block": true },
+      { "chave": "componentes_danificados_durante_o_teste", "tipo": "binaria" },
+      { "chave": "entradas_e_saidas", "tipo": "binaria" },
+      { "chave": "embalagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
+    ]
+  },
+  
+   "setorial_micron": {
+    "nome": "Setorial / Micron",
+    "perguntas": [
+      { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
+      { "chave": "solda_fria", "tipo": "binaria" },
+      { "chave": "componentes_danificados_no_processo", "tipo": "nivel1" },
+      { "chave": "limpeza_feita", "tipo": "binaria" },
+      { "chave": "colado_os_adesivos", "tipo": "binaria" },
+      { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
+      { "chave": "teste_aplicavel", "tipo": "binaria","skip_if_no": true },
+      { "chave": "componentes_em_curto", "tipo": "nivel1" },
+      { "chave": "componentes_com_defeito", "tipo": "nivel1" },
+      { "chave": "danificados_durante_o_teste", "tipo": "nivel1" },
+      { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
+    ]
+  }
+}
