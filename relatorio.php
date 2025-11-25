@@ -20,6 +20,10 @@ if (!isset($produtos[$produtoKey])) {
 }
 
 $produto = $produtos[$produtoKey];
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -46,8 +50,11 @@ $produto = $produtos[$produtoKey];
             $tipo = $pergunta['tipo'];
             $skip_if_no = !empty($pergunta['skip_if_no']) ? 'true' : 'false';
             $is_test_block = !empty($pergunta['is_test_block']) ? 'true' : 'false';
+<<<<<<< HEAD
             // pulo_do_bloco em JSON -> transforma para data-pulo-bloco
             $pulo_do_bloco = !empty($pergunta['pulo_do_bloco']) ? 'true' : 'false';
+=======
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
         ?>
 
         <div class="pergunta"
@@ -55,14 +62,21 @@ $produto = $produtos[$produtoKey];
             data-tipo="<?= htmlspecialchars($tipo) ?>"
             data-skip="<?= $skip_if_no ?>"
             data-is-test-block="<?= $is_test_block ?>"
+<<<<<<< HEAD
             data-pulo-bloco="<?= $pulo_do_bloco ?>"
+=======
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
             style="<?= $i === 0 ? 'display:block' : 'display:none' ?>">
 
             <label><?= htmlspecialchars(ucwords(str_replace("_", " ", $chave))) ?></label>
 
             <?php if ($tipo === 'binaria'): ?>
 
+<<<<<<< HEAD
                 <select name="<?= htmlspecialchars($chave) ?>" data-chave="<?= htmlspecialchars($chave) ?>">
+=======
+                <select name="<?= htmlspecialchars($chave) ?>">
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     <option value="">Selecione...</option>
                     <option value="sim">Sim</option>
                     <option value="nao">Não</option>
@@ -70,7 +84,11 @@ $produto = $produtos[$produtoKey];
 
             <?php elseif ($tipo === 'nivel1'): ?>
 
+<<<<<<< HEAD
                 <select name="<?= htmlspecialchars($chave) ?>" data-chave="<?= htmlspecialchars($chave) ?>">
+=======
+                <select name="<?= htmlspecialchars($chave) ?>">
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     <option value="">Selecione...</option>
                     <option value="1">Nenhum</option>
                     <option value="2">Baixo</option>
@@ -80,7 +98,11 @@ $produto = $produtos[$produtoKey];
 
             <?php elseif ($tipo === 'nivel2'): ?>
 
+<<<<<<< HEAD
                 <select name="<?= htmlspecialchars($chave) ?>" data-chave="<?= htmlspecialchars($chave) ?>">
+=======
+                <select name="<?= htmlspecialchars($chave) ?>">
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     <option value="">Selecione...</option>
                     <option value="1">Nenhum</option>
                     <option value="2">Ruim</option>
@@ -90,25 +112,47 @@ $produto = $produtos[$produtoKey];
 
             <?php elseif ($tipo === 'texto'): ?>
 
+<<<<<<< HEAD
                 <input type="text" name="<?= htmlspecialchars($chave) ?>" data-chave="<?= htmlspecialchars($chave) ?>">
 
             <?php elseif ($tipo === 'min_max' || $tipo === 'rssi'): ?>
 
                 <div class="minmax-container" data-chave="<?= htmlspecialchars($chave) ?>">
+=======
+                <input type="text" name="<?= htmlspecialchars($chave) ?>">
+
+            <?php elseif ($tipo === 'min_max' || $tipo === 'rssi'): ?>
+
+                <div class="minmax-container">
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     <input 
                         type="number" 
                         name="<?= htmlspecialchars($chave) ?>_min"
                         placeholder="Mínimo (30–70)"
+<<<<<<< HEAD
                         min="0"
                         step="1"
+=======
+                        min="30"
+                        max="70"
+                        required
+                        oninput="validarRSSI(this)"
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     >
 
                     <input 
                         type="number" 
                         name="<?= htmlspecialchars($chave) ?>_max"
                         placeholder="Máximo (30–70)"
+<<<<<<< HEAD
                         min="0"
                         step="1"
+=======
+                        min="30"
+                        max="70"
+                        required
+                        oninput="validarRSSI(this)"
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
                     >
                 </div>
 
@@ -136,6 +180,7 @@ $produto = $produtos[$produtoKey];
 
 <script src="assets/js/script.js"></script>
 
+<<<<<<< HEAD
 <!-- Reforços específicos para montagem/teste e validação RSSI (não conflitam com script.js) -->
 <script>
 (function () {
@@ -321,6 +366,35 @@ document.getElementById('formRelatorio').addEventListener('submit', function(e){
         }
     }
 });
+=======
+<script>
+/* === Validação RSSI / MIN_MAX === */
+function validarRSSI(input) {
+
+    let value = Number(input.value);
+
+    // Limites fixos
+    if (value < 30) input.value = 30;
+    if (value > 70) input.value = 70;
+
+    const container = input.closest(".minmax-container");
+    const minInput = container.querySelector("input[name$='_min']");
+    const maxInput = container.querySelector("input[name$='_max']");
+    const msgErro = container.parentElement.querySelector(".mensagem-erro");
+
+    const minValue = Number(minInput.value);
+    const maxValue = Number(maxInput.value);
+
+    msgErro.style.display = "none";
+
+    if (!isNaN(minValue) && !isNaN(maxValue)) {
+        if (maxValue < minValue) {
+            msgErro.textContent = "O valor máximo não pode ser menor que o mínimo.";
+            msgErro.style.display = "block";
+        }
+    }
+}
+>>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 </script>
 
 </body>
