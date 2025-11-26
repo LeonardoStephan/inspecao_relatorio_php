@@ -54,11 +54,7 @@ select {
     font-size: 16px;
 }
 
-<<<<<<< HEAD
-/* ======== TABELAS ======== */
-=======
 /* ======== TABELAS (relatório gerado) ======== */
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 
 table {
     background-color: rgb(247, 234, 219);
@@ -109,11 +105,7 @@ table {
     margin-top: 5px;
 }
 
-<<<<<<< HEAD
-/* ======== LISTA DE PRODUTOS ======== */
-=======
 /* ======== LISTA DE PRODUTOS (produtos.php) ======== */
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 
 .produtos-list {
     display: flex;
@@ -132,10 +124,7 @@ table {
     font-size: 18px;
 }
 
-<<<<<<< HEAD
 /* ======== RESPONSIVIDADE ======== */
-=======
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 
 @media (max-width: 600px) {
     input[type="text"],

@@ -2,7 +2,6 @@
 session_start();
 
 $anoAtual = date("Y");
-<<<<<<< HEAD
 
 // Recupera valores salvos na sessão
 $empresa     = $_SESSION['empresa']     ?? '';
@@ -11,15 +10,7 @@ $data_inicio = $_SESSION['data_inicio'] ?? '';
 $data_fim    = $_SESSION['data_fim']    ?? '';
 $previsao    = $_SESSION['previsao']    ?? '';
 
-// Extrai apenas os 5 dígitos da OP se já foi salva antes
-=======
-$empresa = $_SESSION['empresa'] ?? '';
-$opCompleta = $_SESSION['op'] ?? '';
-$data_inicio = $_SESSION['data_inicio'] ?? '';
-$data_fim = $_SESSION['data_fim'] ?? '';
-$previsao = $_SESSION['previsao'] ?? '';
-
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
+// Extrai apenas os 5 dígitos da OP
 $opSomenteNumero = "";
 if (!empty($opCompleta) && strpos($opCompleta, "/") !== false) {
     $opSomenteNumero = explode("/", $opCompleta)[1];
@@ -29,30 +20,22 @@ if (!empty($opCompleta) && strpos($opCompleta, "/") !== false) {
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<<<<<<< HEAD
-=======
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 <title>Informações Iniciais</title>
 <link rel="stylesheet" href="assets/css/style.css">
 
 <script>
-<<<<<<< HEAD
-// ---------- Salvar sessão em tempo real ----------
-=======
 // ---------- SALVAR NA SESSÃO EM TEMPO REAL ----------
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 function salvarResposta(chave, valor) {
     fetch('salvar_resposta.php', {
         method: "POST",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-<<<<<<< HEAD
         body: "chave=" + encodeURIComponent(chave) +
               "&valor=" + encodeURIComponent(valor)
     });
 }
 
-// ---------- Validação ----------
+// ---------- VALIDAÇÃO COMPLETA ----------
 function validarForm() {
 
     // Valida OP (5 dígitos)
@@ -66,9 +49,9 @@ function validarForm() {
     erro.style.display = "none";
 
     // Valida datas
-    const ini = document.querySelector("input[name='data_inicio']").value;
-    const fim = document.querySelector("input[name='data_fim']").value;
-    const prev = document.querySelector("input[name='previsao']").value;
+    const ini  = document.getElementById("data_inicio").value;
+    const fim  = document.getElementById("data_fim").value;
+    const prev = document.getElementById("previsao").value;
 
     if (ini && fim && fim < ini) {
         alert("A data de conclusão não pode ser antes da data de início!");
@@ -80,19 +63,6 @@ function validarForm() {
         return false;
     }
 
-=======
-        body: "chave=" + encodeURIComponent(chave) + "&valor=" + encodeURIComponent(valor)
-    });
-}
-
-// ---------- VALIDAÇÃO DO FORMULÁRIO ----------
-function validarForm() {
-    const op = document.getElementById("op").value;
-    if (!/^\d{5}$/.test(op)) {
-        document.getElementById("erroOP").style.display = "block";
-        return false;
-    }
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
     return true;
 }
 
@@ -102,18 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
-<<<<<<< HEAD
-=======
-
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 </head>
 
 <body>
 <div class="container">
-<<<<<<< HEAD
 
-=======
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
     <h1>Início do Relatório</h1>
 
     <form action="produtos.php" method="post" onsubmit="return validarForm();">
@@ -121,38 +84,24 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>Por qual empresa?</h3>
         <select name="empresa" required>
             <option value="">Selecione</option>
-<<<<<<< HEAD
             <option value="Marchi" <?= $empresa === "Marchi" ? "selected" : "" ?>>Marchi</option>
-            <option value="GS" <?= $empresa === "GS" ? "selected" : "" ?>>GS</option>
-=======
-            <option value="Marchi" <?= $empresa == "Marchi" ? "selected" : "" ?>>Marchi</option>
-            <option value="GS" <?= $empresa == "GS" ? "selected" : "" ?>>GS</option>
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
+            <option value="GS"     <?= $empresa === "GS"     ? "selected" : "" ?>>GS</option>
         </select>
 
         <h3>Digite o número da Ordem de Produção:</h3>
         <div>
             <span><?= htmlspecialchars($anoAtual) ?>/</span>
+
+            <!-- Agora a OP sempre volta preenchida corretamente -->
             <input style="width:100px;" type="text" name="op" id="op" maxlength="5"
                 oninput="this.value = this.value.replace(/[^0-9]/g,'');"
                 required placeholder="00000"
                 value="<?= htmlspecialchars($opSomenteNumero) ?>">
         </div>
-<<<<<<< HEAD
+
         <div id="erroOP" style="color:red; display:none;">
             A OP deve ter 5 dígitos numéricos.
         </div>
-
-        <h3>Dia do Início:</h3>
-        <input type="date" name="data_inicio" value="<?= htmlspecialchars($data_inicio) ?>" required>
-
-        <h3>Dia de Conclusão:</h3>
-        <input type="date" name="data_fim" value="<?= htmlspecialchars($data_fim) ?>" required>
-
-        <h3>Previsão de Conclusão:</h3>
-        <input type="date" name="previsao" value="<?= htmlspecialchars($previsao) ?>" required>
-=======
-        <div id="erroOP">A OP deve ter 5 dígitos numéricos.</div>
 
         <h3>Dia do Início:</h3>
         <input type="date" name="data_inicio" id="data_inicio"
@@ -165,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>Previsão de Conclusão:</h3>
         <input type="date" name="previsao" id="previsao"
                value="<?= htmlspecialchars($previsao) ?>" required>
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 
         <br><br>
 
@@ -175,10 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
     </form>
-<<<<<<< HEAD
 
-=======
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
 </div>
 </body>
 </html>

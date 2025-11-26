@@ -11,11 +11,7 @@
       { "chave": "limpeza_feita", "tipo": "binaria" },
       { "chave": "colado_os_adesivos", "tipo": "binaria" },
       { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
-<<<<<<< HEAD
-      { "chave": "teste_aplicavel", "tipo": "binaria", "skip_if_no": true, "is_test_block": true },
-=======
       { "chave": "teste_aplicavel", "tipo": "binaria","skip_if_no": true },
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
       { "chave": "componentes_em_curto", "tipo": "nivel1" },
       { "chave": "componentes_com_defeito", "tipo": "nivel1" },
       { "chave": "danificados_durante_o_teste", "tipo": "nivel1" },
@@ -71,13 +67,8 @@
       { "chave": "identificacao_de_quem_testou", "tipo": "texto" }
     ]
   },
-<<<<<<< HEAD
-
-  "setorial_micron": {
-=======
   
    "setorial_micron": {
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
     "nome": "Setorial / Micron",
     "perguntas": [
       { "chave": "montagem_aplicavel", "tipo": "binaria", "skip_if_no": true },
@@ -86,11 +77,7 @@
       { "chave": "limpeza_feita", "tipo": "binaria" },
       { "chave": "colado_os_adesivos", "tipo": "binaria" },
       { "chave": "identificacao_de_quem_montou", "tipo": "texto" },
-<<<<<<< HEAD
-      { "chave": "teste_aplicavel", "tipo": "binaria", "skip_if_no": true, "is_test_block": true },
-=======
       { "chave": "teste_aplicavel", "tipo": "binaria","skip_if_no": true },
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
       { "chave": "componentes_em_curto", "tipo": "nivel1" },
       { "chave": "componentes_com_defeito", "tipo": "nivel1" },
       { "chave": "danificados_durante_o_teste", "tipo": "nivel1" },

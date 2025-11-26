@@ -1,199 +1,217 @@
+/* ============================================================
+   BLOCO A — SALVAR E RESTAURAR EMPRESA / OP / DATAS
+   ============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const camposInfo = ["empresa", "op", "data_inicio", "data_fim", "previsao"];
+
+    // --- Restaura valores automaticamente ao voltar ---
+    camposInfo.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && sessionStorage.getItem(id)) {
+            el.value = sessionStorage.getItem(id);
+        }
+    });
+
+    // --- Salva automaticamente quando digitar ---
+    camposInfo.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        el.addEventListener("input", () => {
+            sessionStorage.setItem(id, el.value);
+        });
+    });
+});
+
+
+/* ============================================================
+   BLOCO B — SALVAR E RESTAURAR PERGUNTAS DO RELATÓRIO
+   ============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const perguntas = document.querySelectorAll("[data-chave]");
+
+    if (perguntas.length === 0) return;
+
+    // Restaurar valores
+    perguntas.forEach(p => {
+        const chave = p.dataset.chave;
+        const campomin = document.querySelector(`[name='${chave}_min']`);
+        const campomax = document.querySelector(`[name='${chave}_max']`);
+        const campo = document.querySelector(`[name='${chave}']`);
+
+        // min/max
+        if (campomin && campomax) {
+            if (sessionStorage.getItem(chave + "_min"))
+                campomin.value = sessionStorage.getItem(chave + "_min");
+            if (sessionStorage.getItem(chave + "_max"))
+                campomax.value = sessionStorage.getItem(chave + "_max");
+
+            campomin.addEventListener("input", () => {
+                sessionStorage.setItem(chave + "_min", campomin.value);
+            });
+
+            campomax.addEventListener("input", () => {
+                sessionStorage.setItem(chave + "_max", campomax.value);
+            });
+        }
+
+        // texto/select
+        if (campo) {
+            if (sessionStorage.getItem(chave))
+                campo.value = sessionStorage.getItem(chave);
+
+            campo.addEventListener("input", () => {
+                sessionStorage.setItem(chave, campo.value);
+            });
+        }
+    });
+});
+
+
+/* ============================================================
+   BLOCO C — VALIDAÇÃO MIN/MAX + RSSI
+   ============================================================ */
+
+function validarRSSI(input) {
+    let v = Number(input.value);
+    if (v < 30) input.value = 30;
+    if (v > 70) input.value = 70;
+
+    const cont = input.closest(".minmax-container");
+    if (!cont) return;
+
+    const min = cont.querySelector("input[name$='_min']");
+    const max = cont.querySelector("input[name$='_max']");
+
+    if (Number(max.value) < Number(min.value)) {
+        max.value = min.value;
+    }
+}
+
+function validaMinMaxInline(perguntaDiv) {
+    const min = perguntaDiv.querySelector("input[name$='_min']");
+    const max = perguntaDiv.querySelector("input[name$='_max']");
+    const msg = perguntaDiv.querySelector(".mensagem-erro");
+
+    if (!min || !max) return true;
+
+    if (min.value === "" || max.value === "") {
+        msg.style.display = "none";
+        return false;
+    }
+
+    let nmin = Number(min.value);
+    let nmax = Number(max.value);
+
+    if (nmin < 30 || nmin > 70 || nmax < 30 || nmax > 70) {
+        msg.textContent = "Valores válidos: 30 a 70.";
+        msg.style.display = "block";
+        return false;
+    }
+
+    if (nmax < nmin) {
+        msg.textContent = "Máximo não pode ser menor que o mínimo.";
+        msg.style.display = "block";
+        return false;
+    }
+
+    msg.style.display = "none";
+    return true;
+}
+
+
+/* ============================================================
+   BLOCO D — LÓGICA PRINCIPAL DO FORMULÁRIO (FLUXO)
+   ============================================================ */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const perguntas = Array.from(document.querySelectorAll(".pergunta"));
     const botaoFinal = document.getElementById("botaoFinal");
 
-    // Mostra apenas a primeira no início
+    if (perguntas.length === 0) return;
+
+    // Mostrar só a primeira
     perguntas.forEach((p, i) => p.style.display = i === 0 ? "block" : "none");
 
-    // ---------- HELPERS ----------
-    function findTestStartIndex() {
+    function perguntaPreenchida(p) {
+        const sel = p.querySelector("select");
+        if (sel && sel.value === "") return false;
+
+        const txt = p.querySelector("input[type='text']");
+        if (txt && txt.value.trim() === "") return false;
+
+        const min = p.querySelector("input[name$='_min']");
+        const max = p.querySelector("input[name$='_max']");
+        if (min && max) return validaMinMaxInline(p);
+
+        const nums = p.querySelectorAll("input[type='number']");
+        for (let n of nums) if (n.value.trim() === "") return false;
+
+        return true;
+    }
+
+    function encontrarInicioTeste() {
         return perguntas.findIndex(p => p.dataset.isTestBlock === "true");
     }
 
-    function show(el) { el.style.display = "block"; }
-    function hide(el) { el.style.display = "none"; }
-
-    function validaMinMaxInline(perguntaDiv) {
-        const minInput = perguntaDiv.querySelector("input[name$='_min']");
-        const maxInput = perguntaDiv.querySelector("input[name$='_max']");
-        const msgEl = perguntaDiv.querySelector(".mensagem-erro");
-
-        if (!minInput || !maxInput) {
-            if (msgEl) msgEl.style.display = "none";
-            return true;
-        }
-
-        if (minInput.value === "" || maxInput.value === "") {
-<<<<<<< HEAD
-            msgEl.style.display = "none";
-=======
-            if (msgEl) msgEl.style.display = "none";
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-            return false;
-        }
-
-        const nmin = Number(minInput.value);
-        const nmax = Number(maxInput.value);
-
-<<<<<<< HEAD
-=======
-        if (isNaN(nmin) || isNaN(nmax)) {
-            msg("Digite apenas números válidos.");
-            return false;
-        }
-
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-        if (nmin < 30 || nmin > 70 || nmax < 30 || nmax > 70) {
-            msg("Valores válidos: 30 a 70.");
-            return false;
-        }
-
-        if (nmax < nmin) {
-            msg("O máximo não pode ser menor que o mínimo.");
-            return false;
-        }
-
-        msgEl.style.display = "none";
-        return true;
-
-        function msg(t) {
-            msgEl.textContent = t;
-            msgEl.style.display = "block";
-        }
-    }
-
-    function perguntaEstaPreenchida(perguntaDiv) {
-        const sel = perguntaDiv.querySelector("select");
-        if (sel && sel.value === "") return false;
-
-        const text = perguntaDiv.querySelector("input[type='text']");
-        if (text && text.value.trim() === "") return false;
-
-        const min = perguntaDiv.querySelector("input[name$='_min']");
-        const max = perguntaDiv.querySelector("input[name$='_max']");
-<<<<<<< HEAD
-        if (min && max) return validaMinMaxInline(perguntaDiv);
-=======
-        if (min || max) return validaMinMaxInline(perguntaDiv);
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-
-        const numbers = perguntaDiv.querySelectorAll("input[type='number']");
-        for (let n of numbers) {
-            if (n.value.trim() === "") return false;
-        }
-
-        return true;
-    }
-
-<<<<<<< HEAD
-    // ---------- LÓGICA PRINCIPAL ----------
-=======
-    // ---------- LÓGICA PRINCIPAL DE FLUXO ----------
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
     function avancarFluxo() {
-        const testStart = findTestStartIndex();
+        const testStart = encontrarInicioTeste();
         let skipMontagem = false;
         let skipTeste = false;
 
-<<<<<<< HEAD
-        // Detectando skip da fase de montagem
+        // skip da montagem
         perguntas.forEach((p, i) => {
             const sel = p.querySelector("select");
             if (!sel) return;
 
             if (p.dataset.skip === "true" && sel.value.toLowerCase() === "nao") {
-                if (testStart === -1 || i < testStart) {
-                    skipMontagem = true;
-                }
+                if (i < testStart) skipMontagem = true;
             }
         });
 
-        // Detecta se Teste Aplicável = NÃO
+        // skip do teste
         if (testStart !== -1) {
-            const pTesteAplicavel = perguntas[testStart];
-            const sel = pTesteAplicavel.querySelector("select");
-            if (sel && sel.value.toLowerCase() === "nao") skipTeste = true;
-        }
-
-        // Fluxo exibindo/ocultando perguntas
-        for (let i = 0; i < perguntas.length; i++) {
-            const p = perguntas[i];
-
-            // Oculta montagem
-            if (skipMontagem && i > 0 && (testStart !== -1 && i < testStart)) {
-=======
-        // Regra 1: Se pergunta de montagem com skip_if_no === "true" tiver "não", pulamos montagem.
-        perguntas.forEach((p, i) => {
-            const sel = p.querySelector("select");
-            if (!sel) return;
-            const val = sel.value.toLowerCase();
-
-            if (p.dataset.skip === "true" && val === "nao") {
-                if (testStart === -1 || i < testStart)
-                    skipMontagem = true;
-            }
-        });
-
-        // Regra 2: Detectar se o teste aplicável foi marcado como NÃO
-        if (testStart !== -1) {
-            const pTeste = perguntas[testStart];
-            const sel = pTeste.querySelector("select");
-            if (sel && sel.value.toLowerCase() === "nao") {
+            const selTeste = perguntas[testStart].querySelector("select");
+            if (selTeste && selTeste.value.toLowerCase() === "nao") {
                 skipTeste = true;
             }
         }
 
-        // Fluxo de exibição
         for (let i = 0; i < perguntas.length; i++) {
             const p = perguntas[i];
-            const isTestBlock = p.dataset.isTestBlock === "true";
-            const puloBloco = p.dataset.puloBloco === "true";
 
-            // --- Regra: ocultar montagem caso skipMontagem seja TRUE ---
-            if (skipMontagem && (i > 0 && i < testStart)) {
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-                hide(p);
+            // esconder montagem
+            if (skipMontagem && i > 0 && i < testStart) {
+                p.style.display = "none";
                 continue;
             }
 
-<<<<<<< HEAD
-            // Oculta bloco de teste
+            // esconder testes
             if (skipTeste && p.dataset.puloBloco === "true") {
-=======
-            // --- Regra: ocultar bloco de teste se test_aplicavel = NÃO ---
-            if (skipTeste && puloBloco) {
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-                hide(p);
+                p.style.display = "none";
                 continue;
             }
 
-            show(p);
+            p.style.display = "block";
 
-<<<<<<< HEAD
-            // Se pergunta atual não válida → oculta as próximas
-=======
-            // Se a pergunta atual não está preenchida, todas as próximas somem
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-            if (!perguntaEstaPreenchida(p)) {
-                for (let j = i + 1; j < perguntas.length; j++) hide(perguntas[j]);
+            if (!perguntaPreenchida(p)) {
+                for (let j = i + 1; j < perguntas.length; j++)
+                    perguntas[j].style.display = "none";
+
                 botaoFinal.style.display = "none";
                 return;
             }
         }
 
-<<<<<<< HEAD
+        // tudo certo → mostrar botão final
         botaoFinal.style.display = "block";
     }
 
-    // Eventos
-=======
-        // Se todas estão válidas
-        botaoFinal.style.display = "block";
-    }
-
-    // ---------- EVENTOS ----------
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
     perguntas.forEach(p => {
         p.querySelectorAll("select, input").forEach(el => {
             el.addEventListener("input", avancarFluxo);
@@ -201,49 +219,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    document.addEventListener("keydown", e => {
-        if (e.key === "Enter") {
-            const el = document.activeElement;
-            if (["INPUT", "SELECT"].includes(el.tagName)) {
-                e.preventDefault();
-                avancarFluxo();
-            }
-        }
-    });
-
-<<<<<<< HEAD
-=======
-    // Foca na primeira
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-    perguntas[0].querySelector("select,input")?.focus();
+    avancarFluxo();
 });
-
-
-<<<<<<< HEAD
-// ---------- LIMITADOR DE RSSI ----------
-=======
-// ---------- FUNÇÃO PARA LIMITAR RSSI ----------
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-function validarRSSI(input) {
-    let value = Number(input.value);
-    if (value < 30) input.value = 30;
-    if (value > 70) input.value = 70;
-
-    const container = input.closest(".minmax-container");
-    if (!container) return;
-
-    const min = container.querySelector("input[name$='_min']");
-<<<<<<< HEAD
-    const max = container.querySelector("input[name$.'_max']");
-=======
-    const max = container.querySelector("input[name$='_max']");
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
-
-    if (Number(max.value) < Number(min.value)) {
-        max.value = min.value;
-    }
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> ff0749ffd777fdbaab9ba40cdcd24e8a1014d597
