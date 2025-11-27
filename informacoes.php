@@ -1,16 +1,14 @@
 <?php
 session_start();
-
 $anoAtual = date("Y");
 
-// Recupera valores salvos na sessão
+// Valores da sessão
 $empresa     = $_SESSION['empresa']     ?? '';
 $opCompleta  = $_SESSION['op']          ?? '';
 $data_inicio = $_SESSION['data_inicio'] ?? '';
 $data_fim    = $_SESSION['data_fim']    ?? '';
 $previsao    = $_SESSION['previsao']    ?? '';
 
-// Extrai apenas os 5 dígitos da OP
 $opSomenteNumero = "";
 if (!empty($opCompleta) && strpos($opCompleta, "/") !== false) {
     $opSomenteNumero = explode("/", $opCompleta)[1];
@@ -23,9 +21,7 @@ if (!empty($opCompleta) && strpos($opCompleta, "/") !== false) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Informações Iniciais</title>
 <link rel="stylesheet" href="assets/css/style.css">
-
 <script>
-// ---------- SALVAR NA SESSÃO EM TEMPO REAL ----------
 function salvarResposta(chave, valor) {
     fetch('salvar_resposta.php', {
         method: "POST",
@@ -35,33 +31,17 @@ function salvarResposta(chave, valor) {
     });
 }
 
-// ---------- VALIDAÇÃO COMPLETA ----------
 function validarForm() {
-
-    // Valida OP (5 dígitos)
     const op = document.getElementById("op").value;
     const erro = document.getElementById("erroOP");
-
-    if (!/^\d{5}$/.test(op)) {
-        erro.style.display = "block";
-        return false;
-    }
+    if (!/^\d{5}$/.test(op)) { erro.style.display = "block"; return false; }
     erro.style.display = "none";
 
-    // Valida datas
     const ini  = document.getElementById("data_inicio").value;
     const fim  = document.getElementById("data_fim").value;
     const prev = document.getElementById("previsao").value;
-
-    if (ini && fim && fim < ini) {
-        alert("A data de conclusão não pode ser antes da data de início!");
-        return false;
-    }
-
-    if (ini && prev && prev < ini) {
-        alert("A previsão não pode ser antes da data de início!");
-        return false;
-    }
+    if (ini && fim && fim < ini) { alert("A data de conclusão não pode ser antes da data de início!"); return false; }
+    if (ini && prev && prev < ini) { alert("A previsão não pode ser antes da data de início!"); return false; }
 
     return true;
 }
@@ -73,16 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </head>
-
 <body>
 <div class="container">
-
     <h1>Início do Relatório</h1>
-
     <form action="produtos.php" method="post" onsubmit="return validarForm();">
-
         <h3>Por qual empresa?</h3>
-        <select name="empresa" required>
+        <select name="empresa" id="empresa" required>
             <option value="">Selecione</option>
             <option value="Marchi" <?= $empresa === "Marchi" ? "selected" : "" ?>>Marchi</option>
             <option value="GS"     <?= $empresa === "GS"     ? "selected" : "" ?>>GS</option>
@@ -91,39 +67,25 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>Digite o número da Ordem de Produção:</h3>
         <div>
             <span><?= htmlspecialchars($anoAtual) ?>/</span>
-
-            <!-- Agora a OP sempre volta preenchida corretamente -->
             <input style="width:100px;" type="text" name="op" id="op" maxlength="5"
-                oninput="this.value = this.value.replace(/[^0-9]/g,'');"
-                required placeholder="00000"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');" required placeholder="00000"
                 value="<?= htmlspecialchars($opSomenteNumero) ?>">
         </div>
-
-        <div id="erroOP" style="color:red; display:none;">
-            A OP deve ter 5 dígitos numéricos.
-        </div>
+        <div id="erroOP" style="color:red; display:none;">A OP deve ter 5 dígitos numéricos.</div>
 
         <h3>Dia do Início:</h3>
-        <input type="date" name="data_inicio" id="data_inicio"
-               value="<?= htmlspecialchars($data_inicio) ?>" required>
-
+        <input type="date" name="data_inicio" id="data_inicio" value="<?= htmlspecialchars($data_inicio) ?>" required>
         <h3>Dia de Conclusão:</h3>
-        <input type="date" name="data_fim" id="data_fim"
-               value="<?= htmlspecialchars($data_fim) ?>" required>
-
+        <input type="date" name="data_fim" id="data_fim" value="<?= htmlspecialchars($data_fim) ?>" required>
         <h3>Previsão de Conclusão:</h3>
-        <input type="date" name="previsao" id="previsao"
-               value="<?= htmlspecialchars($previsao) ?>" required>
+        <input type="date" name="previsao" id="previsao" value="<?= htmlspecialchars($previsao) ?>" required>
 
         <br><br>
-
         <div>
             <a href="index.php"><button type="button">Voltar</button></a>
             <button type="submit">Próximo</button>
         </div>
-
     </form>
-
 </div>
 </body>
 </html>
