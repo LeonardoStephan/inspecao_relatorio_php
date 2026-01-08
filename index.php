@@ -1,5 +1,9 @@
 <?php
+session_start();
+$_SESSION = [];
+session_destroy();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,5 +18,9 @@
             <button type="button">Iniciar</button>
         </a>
     </div>
+
+ <script>
+    sessionStorage.clear();
+ </script>   
 </body>
 </html>

@@ -1,0 +1,19 @@
+{
+    "empresa": "Marchi",
+    "ordem_producao": "2026\/00121",
+    "data_inicio": "2025-12-10",
+    "data_conclusao": "2025-12-15",
+    "data_previsao": "2026-01-08",
+    "montagem_aplicavel": "sim",
+    "solda_fria": "sim",
+    "componentes_danificados_no_processo": "Alto",
+    "limpeza_feita": "sim",
+    "colado_os_adesivos": "sim",
+    "identificacao_de_quem_montou": "Leonardo",
+    "teste_aplicavel": "sim",
+    "componentes_em_curto": "Alto",
+    "componentes_com_defeito": "Alto",
+    "danificados_durante_o_teste": "Alto",
+    "identificacao_de_quem_testou": "Matheus",
+    "data_geracao": "08\/01\/2026 16:54:46"
+}

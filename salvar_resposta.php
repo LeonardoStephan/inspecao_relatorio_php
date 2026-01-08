@@ -1,10 +1,21 @@
 <?php
 session_start();
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo "Método não permitido"; exit; }
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit;
+}
 
 $chave = $_POST['chave'] ?? null;
 $valor = $_POST['valor'] ?? null;
-if ($chave === null) { http_response_code(400); echo "Chave ausente"; exit; }
 
-$_SESSION[$chave] = $valor;
+if (!$chave) exit;
+
+if ($chave === "op") {
+    $ano = date("Y");
+    $_SESSION['op'] = $ano . "/" . preg_replace('/\D/', '', $valor);
+} else {
+    $_SESSION[$chave] = $valor;
+}
+
 echo "OK";
