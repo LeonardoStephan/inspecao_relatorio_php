@@ -42,10 +42,11 @@ $mapaNivel2 = [
 
 $mapaNivel3 = [
     "1" => "Bruno",
-    "2" => "Leonardo",
-    "3" => "Matheus",
-    "4" => "Robert",
-    "5" => "Thiago"
+    "2" => "Fernando",
+    "3" => "Leonardo",
+    "4" => "Matheus",
+    "5" => "Robert",
+    "6" => "Thiago"
 ];
 
 /* =========================

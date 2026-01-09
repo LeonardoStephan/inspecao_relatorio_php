@@ -90,10 +90,11 @@ $blocos = $produto['blocos'] ?? [];
                             <select name="<?= htmlspecialchars($chave) ?>">
                                 <option value="">Selecione...</option>
                                 <option value="1">Bruno</option>
-                                <option value="2">Leonardo</option>
-                                <option value="3">Matheus</option>
-                                <option value="4">Robert</option>
-                                <option value="5">Thiago</option>
+                                <option value="2">Fernando</option>
+                                <option value="3">Leonardo</option>
+                                <option value="4">Matheus</option>
+                                <option value="5">Robert</option>
+                                <option value="6">Thiago</option>
 
                             </select>
 
